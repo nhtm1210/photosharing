@@ -16,14 +16,14 @@ dbConnect();
 
 app.use(
   cors({
-    origin: "*", // Hãy đảm bảo URL này chính xác 100%
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Nếu bạn dùng JWT, thường nên để true hoặc bỏ qua
+    credentials: true,
   })
 );
 
-// 2. XỬ LÝ OPTIONS PREFLIGHT (Bắt buộc cho mọi route)
+// 2. XỬ LÝ OPTIONS PREFLIGHT
 app.options("*", cors());
 
 app.use(express.json());
@@ -43,15 +43,6 @@ app.use("/api/comment", requireLogin, CommentRouter);
 app.get("/", (req, res) => {
   res.send({ message: "Hello from photo-sharing app AP111222111I!" });
 });
-
-// Phục vụ React build (production)
-const CLIENT_BUILD = path.join(__dirname, "..", "client", "build");
-if (fs.existsSync(CLIENT_BUILD)) {
-  app.use(express.static(CLIENT_BUILD));
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(CLIENT_BUILD, "index.html"));
-  });
-}
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

@@ -45,7 +45,7 @@ function LoginRegister({ onLogin }) {
         login_name: loginName,
         password: loginPassword,
       });
-      if (user.token) setToken(user.token); // 💾 lưu JWT
+      if (user.token) setToken(user.token); //  lưu JWT
       onLogin(user);
     } catch (err) {
       console.log(err);

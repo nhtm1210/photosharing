@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: photos-pvc, namespace: photoapp }
+spec:
+  accessModes: [ReadWriteOnce]
+  resources: { requests: { storage: 1Gi } }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: backend, namespace: photoapp }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: backend } }
+  template:
+    metadata: { labels: { app: backend } }
+    spec:
+      containers:
+        - name: backend
+          image: nhtm/photoapp-backend:v1   # ← đổi username
+          ports: [{ containerPort: 8081 }]
+          env:
+            - { name: PORT, value: "8081" }
+            - name: DB_URL
+              valueFrom: { secretKeyRef: { name: app-secret, key: DB_URL } }
+            - name: JWT_SECRET
+              valueFrom: { secretKeyRef: { name: app-secret, key: JWT_SECRET } }
+          volumeMounts:
+            - { name: photos, mountPath: /app/images }
+      volumes:
+        - name: photos
+          persistentVolumeClaim: { claimName: photos-pvc }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: backend, namespace: photoapp }
+spec:
+  selector: { app: backend }
+  ports: [{ port: 8081, targetPort: 8081 }]

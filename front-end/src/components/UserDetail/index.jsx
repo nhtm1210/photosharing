@@ -30,7 +30,6 @@ function UserDetail() {
         <strong>Location:</strong> {user.location}
       </Typography>
 
-      {/* ---THÊM PHẦN EXTRA CREDIT --- */}
       <Typography
         variant="body1"
         style={{ marginTop: "16px", marginBottom: "16px" }}

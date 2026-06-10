@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET =
-  process.env.JWT_SECRET || "photo-app-final-secret-please-change";
+  process.env.JWT_SECRET;
 
 function requireLogin(req, res, next) {
   const auth = req.headers.authorization;

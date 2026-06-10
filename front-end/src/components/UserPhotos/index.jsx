@@ -35,7 +35,6 @@ function UserPhotos(props) {
   useEffect(() => {
     refetch();
     setStepIndex(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, dataVersion]);
 
   if (!photos) return <Typography variant="h6">Loading photos...</Typography>;

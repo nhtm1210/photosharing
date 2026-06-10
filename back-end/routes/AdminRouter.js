@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" }
     );
     return res.json({
-      token, // FE lưu vào localStorage và gửi qua Authorization header
+      token,
       _id: user._id,
       first_name: user.first_name,
       last_name: user.last_name,
@@ -32,7 +32,6 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  // Với JWT: logout chỉ là FE xoá token. Endpoint giữ lại cho FE gọi.
   return res.status(200).send("Logged out");
 });
 
@@ -73,7 +72,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Verify token còn hợp lệ — FE gọi khi mount App để khôi phục session
 router.get("/current", (req, res) => {
   const auth = req.headers.authorization;
   if (!auth || !auth.startsWith("Bearer ")) {

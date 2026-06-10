@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8081/";
+const BASE_URL = "http://localhost:8081";
 const TOKEN_KEY = "photoAppToken";
 
 function getToken() {
@@ -64,7 +64,7 @@ async function postModel(url, body) {
 async function postFormData(url, formData) {
   const response = await fetch(buildUrl(url), {
     method: "POST",
-    headers: { ...authHeaders() }, // KHÔNG set Content-Type cho FormData
+    headers: { ...authHeaders() },
     body: formData,
   });
   if (!response.ok) {

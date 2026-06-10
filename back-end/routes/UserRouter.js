@@ -5,7 +5,6 @@ const Photo = require("../db/photoModel");
 const requireLogin = require("../middleware/requireLogin");
 const router = express.Router();
 
-// POST /api/user  -> đăng ký user mới (không cần auth)
 router.post("/", async (req, res) => {
   const {
     login_name,

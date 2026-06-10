@@ -1,0 +1,14 @@
+node_modules/
+*/node_modules/
+build/
+*/build/
+.env
+*/.env
+.env.*
+*/.env.*
+!.env.example
+*/.env.example
+*.log
+.DS_Store
+back-end/images/*
+!back-end/images/.gitkeep

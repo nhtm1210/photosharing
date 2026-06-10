@@ -48,7 +48,7 @@ function TopBar(props) {
     } catch (e) {
       // ignore
     }
-    clearToken(); // 🗑️ xoá JWT khỏi localStorage
+    clearToken(); // xoá JWT khỏi localStorage
     setCurrentUser(null);
   };
 

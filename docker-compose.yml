@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: photoapp-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./back-end
+    container_name: photoapp-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      DB_URL: mongodb://root:rootpass@mongo:27017/photoApp?authSource=admin
+      JWT_SECRET: dev-secret-change-me
+      PORT: 8081
+    volumes:
+      - photos-data:/app/images
+    ports:
+      - "8081:8081"
+
+  frontend:
+    build:
+      context: ./front-end
+      args:
+        REACT_APP_BASE_URL: http://localhost:8081
+    container_name: photoapp-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo-data:
+  photos-data:
